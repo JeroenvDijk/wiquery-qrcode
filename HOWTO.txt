@@ -1,2 +1,0 @@
-QrCodeContainer creates a QR-code image. Just add a div and add the content that should be encoded to the QR-code.
-Most of the times I think you'd like a web address here.
