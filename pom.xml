@@ -25,20 +25,21 @@
 		<jetty.version>6.1.26</jetty.version>
 	</properties>
 
-	<url>https://github.com/hielkehoeve/wiquery-highcharts/wiki</url>
+	<url>https://github.com/JeroenvDijk/wiquery-qrcode/wiki</url>
 	<scm>
-		<url>git@github.com:hielkehoeve/wiquery-highcharts.git</url>
-		<connection>scm:git:git@github.com:hielkehoeve/wiquery-highcharts.git</connection>
-		<developerConnection>scm:git:git@github.com:hielkehoeve/wiquery-highcharts.git</developerConnection>
+		<url>git@github.com:JeroenvDijk/wiquery-qrcode.git</url>
+		<connection>scm:git:git@github.com:JeroenvDijk/wiquery-qrcode.git</connection>
+		<developerConnection>scm:git:git@github.com:JeroenvDijk/wiquery-qrcode.git</developerConnection>
 	</scm>
 
 	<developers>
 		<developer>
 			<id>vdijk</id>
 			<name>Jeroen v. Dijk</name>
+			<url>http://www.jeroenvdijk.com</url>
 			<email>jeroen.van.dijk@topicus.nl</email>
 			<organization>Topicus Zorg</organization>
-			<organizationUrl>http://www.jeroenvdijk.com</organizationUrl>
+			<organizationUrl>http://www.topicus.nl</organizationUrl>
 			<timezone>GMT+1</timezone>
 		</developer>
 	</developers>

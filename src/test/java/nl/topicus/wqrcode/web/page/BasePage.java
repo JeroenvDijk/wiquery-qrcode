@@ -10,6 +10,6 @@ public class BasePage extends WebPage
 
 	public BasePage()
 	{
-		add(new QrCodeImageContainer("qrcode", "This is a QR test code", 128));
+		add(new QrCodeImageContainer("qrcode", "http://github.com/JeroenvDijk/wiquery-qrcode", 128));
 	}
 }
