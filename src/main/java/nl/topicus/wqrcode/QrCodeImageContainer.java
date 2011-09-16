@@ -1,12 +1,17 @@
 package nl.topicus.wqrcode;
 
+import javax.servlet.http.HttpServletRequest;
+
 import nl.topicus.wqrcode.js.JsonJavascriptReference;
 import nl.topicus.wqrcode.js.QrCodeJavascriptReference;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.wicket.Page;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.WicketTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.protocol.http.WebRequest;
 import org.odlabs.wiquery.core.commons.IWiQueryPlugin;
 import org.odlabs.wiquery.core.commons.WiQueryResourceManager;
 import org.odlabs.wiquery.core.javascript.JsStatement;
@@ -32,13 +37,63 @@ public class QrCodeImageContainer extends WebMarkupContainer implements IWiQuery
 	/** all parameters for the QR code are stored here */
 	private Options options = new Options();
 
+	private Model<Class<? extends Page>> pageClass = null;;
+
+
+	/**
+	 * Constructor
+	 * 
+	 * @param id
+	 *            the wicket:id
+	 * @param page
+	 *            what link should your QR code reader display?
+	 */
+	public QrCodeImageContainer(String id, Class<? extends Page> pageClass)
+	{
+		this(id, pageClass, 64);
+	}
+
+	/**
+	 * Constructor
+	 * 
+	 * @param id
+	 *            the wicket:id
+	 * @param page
+	 *            what link should your QR code reader display?
+	 * @param size
+	 *            What size do you want the QR code to be?
+	 */
+	public QrCodeImageContainer(String id, Class<? extends Page> pageClass, int size)
+	{
+		this(id, pageClass, size, 4);
+	}
+
+	/**
+	 * Constructor
+	 * 
+	 * @param id
+	 *            the wicket:id
+	 * @param page
+	 *            what link should your QR code reader display?
+	 * @param size
+	 *            What size do you want the QR code to be?
+	 * @param typeNumber
+	 *            This goes from 1 to 10, the bigger the more caracters the QR can contain. But the exact way is a
+	 *            little vague, I'd say just leave it and stay under +/- 120 caracters
+	 */
+	public QrCodeImageContainer(String id, Class<? extends Page> pageClass, int size, int typeNumber)
+	{
+		this(id, "", size, typeNumber);
+		this.pageClass  = new Model<Class<? extends Page>>(pageClass);
+	}
+	
 	/**
 	 * Constructor
 	 * 
 	 * @param id
 	 *            the wicket:id
 	 * @param text
-	 *            what should your QR code reader read?
+	 *            what should your QR code reader display?
 	 */
 	public QrCodeImageContainer(String id, String text)
 	{
@@ -51,7 +106,7 @@ public class QrCodeImageContainer extends WebMarkupContainer implements IWiQuery
 	 * @param id
 	 *            the wicket:id
 	 * @param text
-	 *            what should your QR code reader read?
+	 *            what should your QR code reader display?
 	 * @param size
 	 *            What size do you want the QR code to be?
 	 */
@@ -66,7 +121,7 @@ public class QrCodeImageContainer extends WebMarkupContainer implements IWiQuery
 	 * @param id
 	 *            the wicket:id
 	 * @param text
-	 *            what should your QR code reader read?
+	 *            what should your QR code reader display?
 	 * @param size
 	 *            What size do you want the QR code to be?
 	 * @param typeNumber
@@ -78,9 +133,9 @@ public class QrCodeImageContainer extends WebMarkupContainer implements IWiQuery
 		super(id);
 
 		setOutputMarkupPlaceholderTag(true);
-		setText(text);
+		setTypeNumber(typeNumber);
 		setSize(size);
-		setTypeNumber(checkTypeNumber(text.length(), typeNumber));
+		setText(text);
 	}
 
 	/*
@@ -94,8 +149,10 @@ public class QrCodeImageContainer extends WebMarkupContainer implements IWiQuery
 	 * 
 	 * @return typeNumber
 	 */
-	private int checkTypeNumber(int length, int typeNumber)
+	private void checkTypeNumber()
 	{
+		int length = getText().length();
+		int typeNumber = options.getInt("typeNumber");
 		if (typeNumber < 1)
 		{
 			typeNumber = 1;
@@ -104,7 +161,7 @@ public class QrCodeImageContainer extends WebMarkupContainer implements IWiQuery
 		{
 			typeNumber += 1;
 		}
-		return typeNumber;
+		setTypeNumber(typeNumber);
 	}
 
 	private boolean typeHighEnough(int typeNumber, int lengthCalculation)
@@ -153,7 +210,27 @@ public class QrCodeImageContainer extends WebMarkupContainer implements IWiQuery
 	@Override
 	public JsStatement statement()
 	{
+		if (getText().equals("''") && pageClass != null)
+		{
+			setText(getWebAddress());
+		}
 		return new JsStatement().$(this).chain("qrcode", options.getJavaScriptOptions());
+	}
+
+	private String getWebAddress() {
+		if (!(getPage().getRequest() instanceof WebRequest))
+		{
+			throw new IllegalStateException("You can only use pageClass when in a WebRequest");
+		}
+		WebRequest webRequest = (WebRequest)getPage().getRequest();
+		HttpServletRequest httpServletRequest = webRequest.getHttpServletRequest();
+		String webAddress = "http://" + httpServletRequest.getServerName();
+		if (httpServletRequest.getServerPort() != 80)
+		{
+			webAddress += ":" + httpServletRequest.getServerPort();
+		}
+		webAddress += "/?bookmarkablePage=" + pageClass.getObject().getCanonicalName();
+		return webAddress;
 	}
 
 	public String getText()
@@ -164,6 +241,7 @@ public class QrCodeImageContainer extends WebMarkupContainer implements IWiQuery
 	public QrCodeImageContainer setText(String text)
 	{
 		options.put("text", "'" + StringEscapeUtils.escapeJavaScript(text) + "'");
+		checkTypeNumber();
 		return this;
 	}
 
@@ -180,6 +258,18 @@ public class QrCodeImageContainer extends WebMarkupContainer implements IWiQuery
 		return this;
 	}
 
+	public Options getOptions() {
+		return options;
+	}
+
+	public Model<Class<? extends Page>> getPageClass() {
+		return pageClass;
+	}
+
+	public void setPageClass(Model<Class<? extends Page>> pageClass) {
+		this.pageClass = pageClass;
+	}
+
 	@Override
 	protected void onComponentTag(ComponentTag tag)
 	{
@@ -190,5 +280,4 @@ public class QrCodeImageContainer extends WebMarkupContainer implements IWiQuery
 		}
 		super.onComponentTag(tag);
 	}
-
 }
