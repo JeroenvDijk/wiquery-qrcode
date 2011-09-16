@@ -1,6 +1,8 @@
 QrCodeContainer creates a QR-code image. Just add a div and add the content that should be encoded to the QR-code.
 Most of the times I think you'd like a web address here.
 
+You can also give the wicket Page instead of text. You'll get the link generated.
+
 The JavaScript is NOT mine
 Have a look at:
 https://github.com/jeromeetienne/jquery-qrcode
