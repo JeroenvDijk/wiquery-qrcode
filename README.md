@@ -1,7 +1,5 @@
 # WiQuery QrCodeContainer
 
-*<a href='https://oss.sonatype.org/content/groups/staging/nl/topicus/wqrcode/' target='_BLANK'>get jar</a> (not always completely up-to-date)*
-
 QrCodeContainer creates a *QR-code image*. Just add a div and add the content that should be encoded to the QR-code.
 Most of the times I think you'd like a web address here.
 
@@ -12,6 +10,21 @@ The JavaScript is NOT mine
 Have a look at: <a href='https://github.com/jeromeetienne/jquery-qrcode' target='_BLANK'>https://github.com/jeromeetienne/jquery-qrcode</a>
 
 What I did is make sure there is a Wicket WebMarkupContainer which now has this jQuery. In the pom maven minify plugin is used to pack these javascript files into one file and also minify it. So in this package you will not see the javascript files which are downloaded from the site named above. 
+
+*<a href='https://oss.sonatype.org/content/groups/staging/nl/topicus/wqrcode/' target='_BLANK'>get jar</a> (not always completely up-to-date)*
+
+## Maven Dependency
+
+Ad this to your dependencies in your pom.xml:
+
+    <dependency>
+    	<groupId>nl.topicus</groupId>
+    	<artifactId>wqrcode</artifactId>
+    	<packaging>jar</packaging>
+    	<version>0.1-SNAPSHOT</version>
+    </dependency>
+
+Have the following repository added: `http://oss.sonatype.org/content/groups/staging`
 
 ## How to Use It
 
@@ -41,20 +54,6 @@ and you have java code
 you will see the following image:
 
 <img src='http://www.jeroenvdijk.com/uploads/example.png' />
-
-
-## Maven Dependency
-
-Ad this to your dependencies in your pom.xml:
-
-    <dependency>
-    	<groupId>nl.topicus</groupId>
-    	<artifactId>wqrcode</artifactId>
-    	<packaging>jar</packaging>
-    	<version>0.1-SNAPSHOT</version>
-    </dependency>
-
-Have the following repository added: `http://oss.sonatype.org/content/groups/staging`
 
 ## That's it!
 
