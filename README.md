@@ -1,4 +1,6 @@
-# WiQuery QrCodeContainer <a href='https://oss.sonatype.org/content/groups/staging/nl/topicus/wqrcode/' target='_BLANK'>get jar</a>
+# WiQuery QrCodeContainer
+
+*<a href='https://oss.sonatype.org/content/groups/staging/nl/topicus/wqrcode/' target='_BLANK'>get jar</a>*
 
 QrCodeContainer creates a *QR-code image*. Just add a div and add the content that should be encoded to the QR-code.
 Most of the times I think you'd like a web address here.
