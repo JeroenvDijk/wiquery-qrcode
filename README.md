@@ -43,9 +43,8 @@ There are three constructors at the moment, which will invert each other:
 
     This goes from 1 to 10, the bigger the more caracters the QR can contain. But the exact way is a little vague, I'd say just leave it and stay under +/- 120 caracters
 
-    **`public QrCodeImageContainer(String id, String text[[, int size], int typeNumber]) { ... }`
-    
-    `public QrCodeImageContainer(String id, Page page[[, int size], int typeNumber]) { ... }`**
+    public QrCodeImageContainer(String id, String text[[, int size], int typeNumber]) { ... }    
+    public QrCodeImageContainer(String id, Page page[[, int size], int typeNumber]) { ... }
 
 In the markup you will need an element which can set its outputMarkupId and thus paints its markup; whether it's empty or not. A normal **div** or a **span** is applicable, a wicket:container is not.
 
