@@ -18,9 +18,9 @@ There are three constructors at the moment, which will invert each other:
 * id
 
     the wicket:id
-* text
+* text or wicket Page
 
-    what should your QR code reader read? This can be just normal text or a web address, your phone will recognise that as a link
+    what should your QR code reader display? This can be just normal text or a web address, your phone will recognise that as a link
 * size (optional)
 
     What size do you want the QR code to be?
