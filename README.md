@@ -23,7 +23,7 @@ Ad this to your dependencies in your pom.xml:
     	<groupId>nl.topicus</groupId>
     	<artifactId>wqrcode</artifactId>
     	<packaging>jar</packaging>
-    	<version>0.1-</version>
+    	<version>0.1</version>
     </dependency>
 
 Have the following repository added: `http://oss.sonatype.org/content/groups/staging`
