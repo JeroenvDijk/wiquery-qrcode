@@ -1,5 +1,7 @@
 # WiQuery QrCodeContainer
 
+Latest releases (to be found on oss.sonatype.org): 0.1 (2011-09-20)
+
 QrCodeContainer creates a *QR-code image*. Just add a div and add the content that should be encoded to the QR-code.
 Most of the times I think you'd like a web address here.
 
@@ -21,7 +23,7 @@ Ad this to your dependencies in your pom.xml:
     	<groupId>nl.topicus</groupId>
     	<artifactId>wqrcode</artifactId>
     	<packaging>jar</packaging>
-    	<version>0.1-SNAPSHOT</version>
+    	<version>0.1-</version>
     </dependency>
 
 Have the following repository added: `http://oss.sonatype.org/content/groups/staging`
